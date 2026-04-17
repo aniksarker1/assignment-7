@@ -11,5 +11,136 @@
     "goal": 30,
     "next_due_date": "2026-03-10"
   },
-  
+  {
+    "id": 2,
+    "name": "Emma Wilson",
+    "picture": "https://i.pravatar.cc/150?img=5",
+    "email": "emma.wilson@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["family"],
+    "bio": "Former colleague and trusted mentor. We often talk about career growth, books, and life updates.",
+    "goal": 30,
+    "next_due_date": "2026-02-27"
+  },
+  {
+    "id": 3,
+    "name": "Lisa Nakamura",
+    "picture": "https://i.pravatar.cc/150?img=32",
+    "email": "lisa.nakamura@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["work"],
+    "bio": "Neighborhood friend who loves cooking and hosting small dinners on weekends.",
+    "goal": 20,
+    "next_due_date": "2026-03-24"
+  },
+  {
+    "id": 4,
+    "name": "James Wright",
+    "picture": "https://i.pravatar.cc/150?img=15",
+    "email": "james.wright@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["hobby", "travel"],
+    "bio": "Friend from a photography club. We reconnect around weekend road trips and camera gear.",
+    "goal": 21,
+    "next_due_date": "2026-03-01"
+  },
+  {
+    "id": 5,
+    "name": "David Kim",
+    "picture": "https://i.pravatar.cc/150?img=14",
+    "email": "david.kim.two@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["work"],
+    "bio": "We reconnect around project updates and occasional weekend coffee chats.",
+    "goal": 30,
+    "next_due_date": "2026-03-14"
+  },
+  {
+    "id": 6,
+    "name": "Emma Wilson",
+    "picture": "https://i.pravatar.cc/150?img=20",
+    "email": "emma.wilson.two@example.com",
+    "days_since_contact": 62,
+    "status": "on-track",
+    "tags": ["family"],
+    "bio": "A close family connection who checks in often and shares life updates regularly.",
+    "goal": 25,
+    "next_due_date": "2026-03-21"
+  },
+  {
+    "id": 7,
+    "name": "Lisa Nakamura",
+    "picture": "https://i.pravatar.cc/150?img=47",
+    "email": "lisa.nakamura.two@example.com",
+    "days_since_contact": 62,
+    "status": "on-track",
+    "tags": ["work"],
+    "bio": "Creative collaborator who enjoys design reviews and thoughtful long conversations.",
+    "goal": 18,
+    "next_due_date": "2026-03-19"
+  },
+  {
+    "id": 8,
+    "name": "James Wright",
+    "picture": "https://i.pravatar.cc/150?img=18",
+    "email": "james.wright.two@example.com",
+    "days_since_contact": 62,
+    "status": "almost due",
+    "tags": ["hobby", "travel"],
+    "bio": "Travel buddy who shares route ideas, gear suggestions, and weekend plans.",
+    "goal": 21,
+    "next_due_date": "2026-03-12"
+  },
+  {
+    "id": 9,
+    "name": "David Kim",
+    "picture": "https://i.pravatar.cc/150?img=33",
+    "email": "david.kim.three@example.com",
+    "days_since_contact": 62,
+    "status": "almost due",
+    "tags": ["work"],
+    "bio": "A dependable professional contact who often shares useful advice and industry news.",
+    "goal": 28,
+    "next_due_date": "2026-03-15"
+  },
+  {
+    "id": 10,
+    "name": "Emma Wilson",
+    "picture": "https://i.pravatar.cc/150?img=24",
+    "email": "emma.wilson.three@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["family"],
+    "bio": "We mostly talk about family gatherings, memories, and future plans.",
+    "goal": 30,
+    "next_due_date": "2026-03-04"
+  },
+  {
+    "id": 11,
+    "name": "Lisa Nakamura",
+    "picture": "https://i.pravatar.cc/150?img=44",
+    "email": "lisa.nakamura.three@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["work"],
+    "bio": "A thoughtful friend from a previous team who still checks in on creative work.",
+    "goal": 20,
+    "next_due_date": "2026-03-02"
+  },
+  {
+    "id": 12,
+    "name": "James Wright",
+    "picture": "https://i.pravatar.cc/150?img=67",
+    "email": "james.wright.three@example.com",
+    "days_since_contact": 62,
+    "status": "on-track",
+    "tags": ["hobby", "travel"],
+    "bio": "A relaxed friend who enjoys short trips, sports talk, and outdoor photography.",
+    "goal": 24,
+    "next_due_date": "2026-03-25"
+  }
 ]
