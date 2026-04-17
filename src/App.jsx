@@ -124,3 +124,570 @@ function isActiveTextClass() {
   return '';
 }
 
+function Footer() {
+  return (
+    <footer className="mt-16 bg-[#1f5a49] text-white">
+      <div className="container-wrap px-4 py-14 text-center md:py-16">
+        <img
+          src="/assets/logo-xl.png"
+          alt="KeenKeeper"
+          className="mx-auto h-[52px] w-auto object-contain"
+        />
+
+        <p className="mx-auto mt-4 max-w-2xl text-[10px] text-white/75">
+          Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
+        </p>
+
+        <div className="mt-6">
+          <h3 className="mb-3 text-[11px] font-semibold">Social Links</h3>
+
+          <div className="flex justify-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+              <img
+                src="/assets/instagram.png"
+                alt="Instagram"
+                className="h-4 w-4 object-contain"
+              />
+            </div>
+
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+              <img
+                src="/assets/facebook.png"
+                alt="Facebook"
+                className="h-4 w-4 object-contain"
+              />
+            </div>
+
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+              <img
+                src="/assets/twitter.png"
+                alt="Twitter"
+                className="h-4 w-4 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 text-[10px] text-white/70 md:flex-row">
+          <p>© 2026 KeenKeeper. All rights reserved.</p>
+
+          <div className="flex gap-6">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Cookies</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function LoadingSpinner() {
+  return (
+    <div className="flex min-h-[220px] items-center justify-center">
+      <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-[#1f5a49]"></div>
+    </div>
+  );
+}
+
+function SummaryCard({ value, label }) {
+  return (
+    <div className="card flex h-[106px] flex-col items-center justify-center text-center">
+      <div className="text-[22px] font-semibold text-[#234f43]">{value}</div>
+      <p className="mt-3 text-[11px] text-[#74829d]">{label}</p>
+    </div>
+  );
+}
+
+function FriendCard({ friend }) {
+  return (
+    <Link
+      to={`/friend/${friend.id}`}
+      className="card block px-4 py-4 text-center transition hover:-translate-y-0.5"
+    >
+      <img
+        src={friend.picture}
+        alt={friend.name}
+        className="mx-auto h-[54px] w-[54px] rounded-full object-cover"
+      />
+
+      <h3 className="mt-3 text-[13px] font-semibold text-slate-800">
+        {friend.name}
+      </h3>
+
+      <p className="mt-1.5 text-[9px] text-[#9aa6b6]">
+        {friend.days_since_contact}d ago
+      </p>
+
+      <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+        {friend.tags.map((tag) => (
+          <span key={tag} className={`tag-badge uppercase ${getTagClasses(tag)}`}>
+  {tag}
+</span>
+        ))}
+      </div>
+
+      <div className="mt-3">
+        <span className={`status-badge ${getStatusClasses(friend.status)}`}>
+          {formatStatus(friend.status)}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function Home() {
+  const [friends, setFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      setLoading(true);
+      const response = await fetch('/friends.json');
+      const data = await response.json();
+
+      setTimeout(() => {
+        setFriends(data);
+        setLoading(false);
+      }, 650);
+    };
+
+    fetchFriends();
+  }, []);
+
+  const summary = useMemo(() => {
+    return {
+      total: 12,
+      onTrack: 3,
+      needAttention: 6,
+      interactionsThisMonth: 12
+    };
+  }, []);
+
+  return (
+    <section className="pt-[46px]">
+      <div className="mx-auto max-w-[770px] text-center">
+        <h1 className="text-[34px] font-bold leading-[1.15] tracking-[-0.04em] text-[#1f2a37] md:text-[38px]">
+          Friends to keep close in your life
+        </h1>
+
+        <p className="mx-auto mt-4 max-w-[430px] text-[11px] leading-5 text-[#94a3b8]">
+          Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
+        </p>
+
+        <button className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#1f5a49] px-4 py-2 text-[11px] font-semibold text-white">
+          <UserPlus size={14} />
+          Add a Friend
+        </button>
+      </div>
+
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <div className="summary-grid mt-9">
+            <SummaryCard value={summary.total} label="Total Friends" />
+            <SummaryCard value={summary.onTrack} label="On Track" />
+            <SummaryCard value={summary.needAttention} label="Need Attention" />
+            <SummaryCard value={summary.interactionsThisMonth} label="Interactions This Month" />
+          </div>
+
+          <div className="mt-6 border-t border-[#e8edf3] pt-6">
+            <h2 className="mb-4 text-[14px] font-semibold text-[#1f2a37]">
+              Your Friends
+            </h2>
+
+            <div className="friend-grid">
+              {friends.map((friend) => (
+                <FriendCard key={friend.id} friend={friend} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
+function FriendDetails() {
+  const { id } = useParams();
+  const [friend, setFriend] = useState(null);
+
+  useEffect(() => {
+    fetch('/friends.json')
+      .then((res) => res.json())
+      .then((data) => {
+        const selectedFriend = data.find((item) => item.id === Number(id));
+        setFriend(selectedFriend || null);
+      });
+  }, [id]);
+
+  const handleQuickCheckIn = (type) => {
+    if (!friend) return;
+
+    const newEntry = {
+      id: Date.now(),
+      type,
+      title: `${type} with ${friend.name}`,
+      date: new Date().toISOString()
+    };
+
+    const existingEntries = getStoredTimeline();
+    const updatedEntries = [newEntry, ...existingEntries];
+    saveStoredTimeline(updatedEntries);
+
+    toast.success(`${type} logged for ${friend.name}`);
+  };
+
+  if (!friend) {
+    return <div className="py-16 text-center text-lg font-medium">Friend not found.</div>;
+  }
+
+  return (
+    <section className="pt-8">
+      <div className="grid gap-5 lg:grid-cols-[240px_1fr]">
+        <div className="card p-5 text-center">
+          <img
+            src={friend.picture}
+            alt={friend.name}
+            className="mx-auto h-16 w-16 rounded-full object-cover"
+          />
+
+          <h1 className="mt-3 text-[15px] font-semibold">{friend.name}</h1>
+
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            <span className={`status-badge ${getStatusClasses(friend.status)}`}>
+              {formatStatus(friend.status)}
+            </span>
+
+            {friend.tags.map((tag) => (
+              <span key={tag} className={`tag-badge uppercase ${getTagClasses(tag)}`}>
+  {tag}
+</span>
+            ))}
+          </div>
+
+          <p className="mt-4 text-[11px] leading-5 text-slate-500">{friend.bio}</p>
+          <p className="mt-2 text-[11px] text-slate-500">{friend.email}</p>
+
+          <div className="mt-5 space-y-2">
+            <button className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 px-4 py-2.5 text-[12px] text-slate-600">
+              <Bell size={14} />
+              Snooze 2 Weeks
+            </button>
+
+            <button className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 px-4 py-2.5 text-[12px] text-slate-600">
+              <Archive size={14} />
+              Archive
+            </button>
+
+            <button className="flex w-full items-center justify-center gap-2 rounded-md border border-red-200 px-4 py-2.5 text-[12px] text-red-500">
+              <Trash2 size={14} />
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-5">
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="card flex h-[94px] flex-col items-center justify-center text-center">
+              <div className="text-[24px] font-semibold text-[#1f5a49]">
+                {friend.days_since_contact}
+              </div>
+              <p className="mt-1 text-[11px] text-slate-500">Days Since Contact</p>
+            </div>
+
+            <div className="card flex h-[94px] flex-col items-center justify-center text-center">
+              <div className="text-[24px] font-semibold text-[#1f5a49]">
+                {friend.goal}
+              </div>
+              <p className="mt-1 text-[11px] text-slate-500">Goal (Days)</p>
+            </div>
+
+            <div className="card flex h-[94px] flex-col items-center justify-center text-center">
+              <div className="text-[22px] font-semibold text-[#1f5a49]">
+                {formatDateLong(friend.next_due_date)}
+              </div>
+              <p className="mt-1 text-[11px] text-slate-500">Next Due</p>
+            </div>
+          </div>
+
+          <div className="card p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-[13px] font-semibold">Relationship Goal</h2>
+                <p className="mt-2 text-[12px] text-slate-500">
+                  Contact every {friend.goal} days
+                </p>
+              </div>
+
+              <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 px-4 py-2.5 text-[12px] text-slate-600">
+                <Pencil size={13} />
+                Edit
+              </button>
+            </div>
+          </div>
+
+          <div className="card p-5">
+            <h2 className="mb-4 text-[13px] font-semibold">Quick Check-In</h2>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <button
+                onClick={() => handleQuickCheckIn('Call')}
+                className="flex h-[80px] flex-col items-center justify-center rounded-md border border-slate-200 px-6 text-[12px] text-slate-700"
+              >
+                <img
+                  src="/assets/call.png"
+                  alt="Call"
+                  className="h-4 w-4 object-contain"
+                />
+                <span className="mt-2">Call</span>
+              </button>
+
+              <button
+                onClick={() => handleQuickCheckIn('Text')}
+                className="flex h-[80px] flex-col items-center justify-center rounded-md border border-slate-200 px-6 text-[12px] text-slate-700"
+              >
+                <img
+                  src="/assets/text.png"
+                  alt="Text"
+                  className="h-4 w-4 object-contain"
+                />
+                <span className="mt-2">Text</span>
+              </button>
+
+              <button
+                onClick={() => handleQuickCheckIn('Video')}
+                className="flex h-[80px] flex-col items-center justify-center rounded-md border border-slate-200 px-6 text-[12px] text-slate-700"
+              >
+                <img
+                  src="/assets/video.png"
+                  alt="Video"
+                  className="h-4 w-4 object-contain"
+                />
+                <span className="mt-2">Video</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Timeline() {
+  const [entries, setEntries] = useState([]);
+  const [filter, setFilter] = useState('All');
+
+  useEffect(() => {
+    setEntries(getStoredTimeline());
+  }, []);
+
+  const iconMap = {
+    Call: <img src="/assets/call.png" alt="Call" className="h-4 w-4 object-contain" />,
+    Text: <img src="/assets/text.png" alt="Text" className="h-4 w-4 object-contain" />,
+    Video: <img src="/assets/video.png" alt="Video" className="h-4 w-4 object-contain" />
+  };
+
+  const filteredEntries = useMemo(() => {
+    if (filter === 'All') return entries;
+    return entries.filter((entry) => entry.type === filter);
+  }, [entries, filter]);
+
+  return (
+    <section className="mx-auto max-w-[760px] pt-10">
+      <h1 className="text-[40px] font-bold tracking-[-0.03em] text-slate-800">
+        Timeline
+      </h1>
+
+      <div className="mt-6 max-w-[220px]">
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-[12px] text-slate-500 outline-none"
+        >
+          <option value="All">Filter timeline</option>
+          <option value="Call">Call</option>
+          <option value="Text">Text</option>
+          <option value="Video">Video</option>
+        </select>
+      </div>
+
+      <div className="mt-8 space-y-3">
+        {filteredEntries.length === 0 ? (
+          <div className="card p-5 text-[12px] text-slate-500">
+            No timeline entries yet.
+          </div>
+        ) : (
+          filteredEntries.map((entry) => (
+            <div key={entry.id} className="card flex items-center gap-4 px-4 py-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-50">
+                {iconMap[entry.type]}
+              </div>
+
+              <div>
+                <h3 className="text-[12px] font-semibold text-slate-700">
+                  {entry.title}
+                </h3>
+                <p className="mt-1 text-[10px] text-slate-400">
+                  {new Date(entry.date).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    setEntries(getStoredTimeline());
+  }, []);
+
+  const chartData = useMemo(() => {
+    const counts = {
+      Text: 0,
+      Call: 0,
+      Video: 0
+    };
+
+    entries.forEach((entry) => {
+      if (counts[entry.type] !== undefined) counts[entry.type] += 1;
+    });
+
+    return [
+      { name: 'Text', value: counts.Text },
+      { name: 'Call', value: counts.Call },
+      { name: 'Video', value: counts.Video }
+    ];
+  }, [entries]);
+
+  return (
+    <section className="mx-auto max-w-[760px] pt-10">
+      <h1 className="text-[40px] font-bold tracking-[-0.03em] text-slate-800">
+        Friendship Analytics
+      </h1>
+
+      <div className="card mt-8 p-6">
+        <p className="mb-6 text-[12px] text-slate-500">By Interaction Type</p>
+
+        <div className="h-[280px] w-full">
+          <ResponsiveContainer>
+            <PieChart>
+              <Pie
+                data={chartData}
+                innerRadius={60}
+                outerRadius={84}
+                paddingAngle={6}
+                dataKey="value"
+              >
+                {chartData.map((entry, index) => (
+                  <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="mt-3 flex justify-center gap-6 text-[11px] text-slate-500">
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#7c3aed]"></span>
+            Text
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#1f5a49]"></span>
+            Call
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#4ade80]"></span>
+            Video
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NotFound() {
+  return (
+    <section className="flex min-h-[50vh] flex-col items-center justify-center text-center">
+      <h1 className="text-6xl font-bold text-[#1f5a49]">404</h1>
+      <p className="mt-4 text-lg text-slate-600">Page not found</p>
+
+      <Link
+        to="/"
+        className="mt-6 rounded-md bg-[#1f5a49] px-5 py-3 text-sm font-semibold text-white"
+      >
+        Go Home
+      </Link>
+    </section>
+  );
+}
+
+function AppLayout({ children }) {
+  return (
+    <div className="page-shell">
+      <Navbar />
+      <main className="container-wrap">{children}</main>
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <AppLayout>
+            <Home />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/friend/:id"
+        element={
+          <AppLayout>
+            <FriendDetails />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/timeline"
+        element={
+          <AppLayout>
+            <Timeline />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/stats"
+        element={
+          <AppLayout>
+            <Stats />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <AppLayout>
+            <NotFound />
+          </AppLayout>
+        }
+      />
+    </Routes>
+  );
+}
+
+export default App;
