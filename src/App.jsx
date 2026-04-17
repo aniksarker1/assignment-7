@@ -81,3 +81,46 @@ const saveStoredTimeline = (entries) => {
   localStorage.setItem('keenkkeeper-timeline', JSON.stringify(entries));
 };
 
+function Navbar() {
+  return (
+    <header className="border-b border-[#e7ebf0] bg-white">
+      <div className="flex items-center justify-between px-10 py-[11px] lg:px-14">
+        <img
+          src="/assets/logo.png"
+          alt="KeenKeeper"
+          className="h-[22px] w-auto object-contain"
+        />
+
+        <nav className="flex items-center gap-2">
+          {navItems.map(({ to, label, icon: Icon }) => (
+            <NavLink key={to} to={to}>
+              {({ isActive }) => (
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-[11px] font-medium transition ${
+                    isActive
+                      ? 'border-[#1f5a49] bg-[#1f5a49] shadow-sm'
+                      : 'border-transparent bg-white text-[#64748b] hover:border-[#e2e8f0]'
+                  }`}
+                >
+                  <Icon
+                    size={12}
+                    strokeWidth={1.9}
+                    className={isActive ? 'text-white' : 'text-[#64748b]'}
+                  />
+                  <span className={isActive ? 'text-white leading-none' : 'text-[#64748b] leading-none'}>
+                    {label}
+                  </span>
+                </span>
+              )}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function isActiveTextClass() {
+  return '';
+}
+
